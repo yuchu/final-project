@@ -15,53 +15,56 @@
     <div class="sidebar">
       <div>
         <h3>Year</h3>
-        <form>
-          <input type="radio" name="year" id="all_year" checked/>All crashes from 2011-2014<br />
-          <input type="radio" name="year" id="year_2011"/>2011<br />
-          <input type="radio" name="year" id="year_2012" />2012<br />
-          <input type="radio" name="year" id="year_2013"/>2013<br />
-          <input type="radio" name="year" id="year_2014"/>2014<br />
-        </form>
+        <ul class="select">
+          <li><input type="radio" name="year" id="all_year" checked/><label for="all_year">All crashes from 2011-2014</label></li>
+          <li><input type="radio" name="year" id="year_2011"/><label for="year_2011">2011</label></li>
+          <li><input type="radio" name="year" id="year_2012" /><label for="year_2012">2012</lable></li>
+          <li><input type="radio" name="year" id="year_2013"/><label for="year_2013">2013</label></li>
+          <li><input type="radio" name="year" id="year_2014"/><label for="year_2014">2014</label></li>
+        </ul>
       </div>
       <div>
         <h3>Injury level</h3>
-        <form>
-          <input type="radio" name="injury_level" id="all_injury" checked/>All<br />
-          <input type="radio" name="injury_level" id="fatal"/>Fatal<br />
-          <input type="radio" name="injury_level" id="majinj" />Major injury<br />
-          <input type="radio" name="injury_level" id="noinj"/>No injury<br />
-        </form>
+        <ul class="select">
+          <li><input type="radio" name="injury_level" id="all_injury" checked/><label for="all_injury">All injury levels</label></li>
+          <li><input type="radio" name="injury_level" id="fatal"/><label for="fatal">Fatal</label></li>
+          <li><input type="radio" name="injury_level" id="majinj" /><label for="majinj">Major injury</lable></li>
+          <li><input type="radio" name="injury_level" id="noinj"/><label for="noinj">No injury</label></li>
+        </ul>
       </div>
       <div>
         <h3>Type of people involved</h3>
-        <form>
-          <input type="radio" name="people_involved" id="all_people" checked>All<br />
-          <input type="radio" name="people_involved" id="bike">Bike-involved<br />
-          <input type="radio" name="people_involved" id="ped">Pedestrian-involved<br />
-        </form>
+        <ul class="select">
+          <li><input type="radio" name="people_involved" id="all_people" checked><label for="all_people">All</label></li>
+          <li><input type="radio" name="people_involved" id="bike"><label for="bike">Bike-involved</label></li>
+          <li><input type="radio" name="people_involved" id="ped"><label for="ped">Pedestrian-involved</lable></li>
+        </ul>
       </div>
       <div>
-        <button id="search"><span>Search</span></button>
-      </div>
-      <div>
-        <h3>Choose choropleth map</h3>
-        <div id="buttons">
-          <button id="map_none"><span>None</span></button>
-          <button id="map_crash_count"><span>Total crashes</span></button>
-          <button id="map_crash_density"><span>Crash density (per acre)</span></button>
-        </div>
-      </div>
-      <div>
-        <h3>Layer controls</h3>
-        <div id="buttons">
-          <button id="sublayer0"><span>Toggle Census tracts</span></button>
-          <button id="sublayer1"><span>Toggle Streets</span></button>
-          <button id="sublayer2"><span>Toggle Crashes</span></button>
-        </div>
+        <button class="buttons" id="search"><span>Search</span></button>
       </div>
     </div>
     <!-- Map -->
     <div id="map" class="map"></div>
+    <!-- choose map type -->
+    <div class="choose_map">
+      <div>
+        <h3>Choose choropleth map</h3>
+        <ul class="select">
+          <li><input type="radio" name="map_type" id="map_none" checked><label for="map_none">None</label></li>
+          <li><input type="radio" name="map_type" id="map_crash_count"><label for="map_crash_count">Total crashes</label></li>
+          <li><input type="radio" name="map_type" id="map_crash_density"><label for="map_crash_density">Crash density (per acre)</lable></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Layer controls</h3>
+        <div>
+          <button class="buttons" id="sublayer0"><span>Toggle Census tracts Layer</span></button>
+          <button class="buttons" id="sublayer1"><span>Toggle Streets Layer</span></button>
+          <button class="buttons" id="sublayer2"><span>Toggle Crashes Layer</span></button>
+        </div>
+      </div>
+    </div>
     <!-- Javascript Imports -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

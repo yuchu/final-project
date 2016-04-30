@@ -61,12 +61,13 @@ var update_crashdensity = function(){
 };
 
 $('#search').click(function(){
+  $("#map_none").prop("checked", true);
   var cartocss = [
     '#censustract{',
-      'polygon-fill: #5CA2D1;',
+      'polygon-fill: #adadad;',
       'polygon-opacity: 0.5;',
-      'line-color: #FFF;',
-      'line-width: 0.5;',
+      'line-color: #fff;',
+      'line-width: 0.8;',
       'line-opacity: 1;',
     '}',
   ].join("\n");
@@ -76,7 +77,7 @@ $('#search').click(function(){
     sublayers[2].setSQL(crashSQL + 'WHERE ' + radioResult.join(' AND '));
     console.log(radioResult.join(' AND '));
     update_crashcount(radioResult);
-
+    update_crashdensity();
   }else{
     sublayers[2].setSQL(crashSQL);
     reset();
@@ -86,10 +87,10 @@ $('#search').click(function(){
 $('#map_none').click(function(){
   var cartocss = [
     '#censustract{',
-      'polygon-fill: #5CA2D1;',
+      'polygon-fill: #adadad;',
       'polygon-opacity: 0.5;',
-      'line-color: #FFF;',
-      'line-width: 0.5;',
+      'line-color: #fff;',
+      'line-width: 0.8;',
       'line-opacity: 1;',
     '}',
   ].join("\n");
@@ -97,7 +98,6 @@ $('#map_none').click(function(){
 });
 
 $('#map_crash_count').click(function(){
-
   var sql = new cartodb.SQL({ user: 'yuchu'});
   sql.execute('SELECT (CDB_QuantileBins(array_agg(crash_count)::numeric[], 5)) FROM censustract')
     .done(function(data){
@@ -108,8 +108,8 @@ $('#map_crash_count').click(function(){
         '#censustract{',
           'polygon-fill: #FFFFB2;',
           'polygon-opacity: 0.8;',
-          'line-color: #FFF;',
-          'line-width: 0.5;',
+          'line-color: #fff;',
+          'line-width: 0.8;',
           'line-opacity: 1;',
         '}',
         '#censustract [ crash_count <=' + count_quantile[4] + '] {',
@@ -144,8 +144,8 @@ $('#map_crash_density').click(function(){
         '#censustract{',
           'polygon-fill: #FFFFB2;',
           'polygon-opacity: 0.8;',
-          'line-color: #FFF;',
-          'line-width: 0.5;',
+          'line-color: #fff;',
+          'line-width: 0.8;',
           'line-opacity: 1;',
         '}',
         '#censustract [ crash_density <=' + density_quantile[4] + '] {',

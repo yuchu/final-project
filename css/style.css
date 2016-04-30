@@ -7,64 +7,96 @@ body {
 .map {
     position: absolute;
     right: 0px;
-    left: 340px;
+    left: 350px;
     height: 100%;
     top: 0;
 }
 
 .sidebar {
-    position: absolute;
-    left: 0px;
-    width: 340px;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-    padding: 20px;
-    padding-bottom: 60px;
+  position: absolute;
+  left: 0px;
+  width: 350px;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding: 20px;
+  padding-bottom: 60px;
+  background-color: #202020;
+  color:#BFBFBF;
 }
 
-.item {
-    padding: 10px;
-    background-color: #eee;
+.choose_map {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  background-color: #202020;
+  color:#BFBFBF;
+  width: 350px;
 }
 
-.item:not(:last-child) {
-    margin-bottom: 10px;
+.choose_map div{
+  padding: 5px 20px;
 }
 
-.item-heading {
-    font-size: 18px;
-    margin-top: 0;
-    font-weight: bold;
+.select{
+  list-style-type: none;
+  margin:25px 0 0 0;
+  padding:0;
 }
 
-.sort {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 340px;
-    background-color: #fff;
-    padding: 20px;
+.select li{
+  margin: 0 5px 0 0;
+  width: 300px;
+  height: 40px;
+  position: relative;
 }
 
-.sort-option {
-    margin-left: 10px;
+.select label, .select input{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.sort-option.selected {
-    border-bottom: 1px solid #ccc;
+.select label {
+  width:300px;
+  padding:5px;
+  border:1px solid #CCC;
+  cursor:pointer;
+  z-index:90;
 }
 
-.sidebar nav.navbar-default {
-    border: 0;
-    border-radius: 0;
-    background-color: #fff;
-    border-bottom: 1px solid #eee;
-    margin: -14px -20px 20px;
-    padding: 0 5px;
+.select input[type="radio"] {
+  opacity:0.011;
+  z-index:100;
 }
 
-.navbar-brand {
-    font-size: 14px;
-    font-weight: bold;
+.select input[type="radio"]:checked + label {
+  background:#BFBFBF;
+  color:#202020;
+}
+
+.select label:hover {
+  background:#BFBFBF;
+  color:#202020;
+}
+
+.buttons {
+  /*font-size: 18px;*/
+  width: 250px;
+  padding: 10px 5%;
+  margin: 10px auto;
+  background-color: #666666;
+  border: 0px;
+  border-radius: 5%;
+  color: #FFFFFF;
+  transition: all 0.5s;
+  display: block;
+}
+
+.buttons:hover{
+  background-color:#CCCCCC;
+  color:#333333;
 }
