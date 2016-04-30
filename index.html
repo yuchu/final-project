@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div>
+        <h3>Year</h3>
+        <form>
+          <input type="radio" name="year" id="all_year" checked/>All crashes from 2011-2014<br />
+          <input type="radio" name="year" id="year_2011"/>2011<br />
+          <input type="radio" name="year" id="year_2012" />2012<br />
+          <input type="radio" name="year" id="year_2013"/>2013<br />
+          <input type="radio" name="year" id="year_2014"/>2014<br />
+        </form>
+      </div>
+      <div>
+        <h3>Injury level</h3>
+        <form>
+          <input type="radio" name="injury_level" id="all_injury" checked/>All<br />
+          <input type="radio" name="injury_level" id="fatal"/>Fatal<br />
+          <input type="radio" name="injury_level" id="majinj" />Major injury<br />
+          <input type="radio" name="injury_level" id="noinj"/>No injury<br />
+        </form>
+      </div>
+      <div>
+        <h3>Type of people involved</h3>
+        <form>
+          <input type="radio" name="people_involved" id="all_people" checked>All<br />
+          <input type="radio" name="people_involved" id="bike">Bike-involved<br />
+          <input type="radio" name="people_involved" id="ped">Pedestrian-involved<br />
+        </form>
+      </div>
+      <div>
+        <button id="search"><span>Search</span></button>
+      </div>
+      <div>
+        <h3>Choose choropleth map</h3>
+        <div id="buttons">
+          <button id="map_none"><span>None</span></button>
+          <button id="map_crash_count"><span>Total crashes</span></button>
+        </div>
+      </div>
+      <div>
+        <h3>Layer controls</h3>
+        <div id="buttons">
+          <button id="sublayer0"><span>Toggle Census tracts</span></button>
+          <button id="sublayer1"><span>Toggle Streets</span></button>
+          <button id="sublayer2"><span>Toggle Crashes</span></button>
+        </div>
+      </div>
+    </div>
+    <!-- Map -->
+    <div id="map" class="map"></div>
+    <!-- Javascript Imports -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script> -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/setup.js"></script>
+  </body>
+</html>
