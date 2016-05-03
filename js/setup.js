@@ -20,54 +20,78 @@ map.addLayer(drawnItems);
 
 // Initialise the draw control and pass it the FeatureGroup of editable layers
 var drawControl = new L.Control.Draw({
-  edit: {
-    featureGroup: drawnItems
-  },
   draw: {
     polyline: false,
-    polygon: false,
-    circle: false
+    polygon: {
+      allowIntersection: false,
+      drawError:{
+        color: '#CF6870',
+        message: 'Error in drawing'
+      },
+      shapeOptions:{
+        color: '#43857C'
+      }
+    },
+    circle: false,
+    marker: false,
+    rectangle: {
+      shapeOptions:{
+        color: '#43857C'
+      }
+    },
   }
 });
 
 // Handling the creation of Leaflet.Draw layers
-// Note here, the use of drawnLayerID - this is undoubdtedly the way you should approach
-//  remembering and removing layers
-var drawnLayerID;
+var drawnLayer;
 map.addControl(drawControl);
+
+var userPolygon;
 map.on('draw:created', function (e) {
   var type = e.layerType;
   var layer = e.layer;
   //console.log('draw created:', e);
-
-  if (type === 'marker') {
-    // Change the 5 here to alter the number of closest records returned!
-    nClosest(layer._latlng, 5);
-  } else if (type === 'rectangle') {
-    pointsWithin(layer._latlngs);
-  }
-
-  if (drawnLayerID) { map.removeLayer(map._layers[drawnLayerID]); }
+  drawnLayer = e.layer;
+  var coords = e.layer._latlngs;
+  console.log(coords);
+  userPolygon = makeSqlPolygon(coords);
   map.addLayer(layer);
-  drawnLayerID = layer._leaflet_id;
 });
+
+map.on('draw:drawstart', function (e) {
+  console.log('start');
+  if (drawnLayer) {
+    map.removeLayer(drawnLayer);
+  }
+});
+
+//turns an array of latLngs into an ST_POLYGONFROMTEXT
+function makeSqlPolygon(coords) {
+  var s = "ST_SETSRID(ST_PolygonFromText(\'POLYGON((";
+  var firstCoord;
+  coords.forEach(function(coord,i){
+    console.log(coord);
+    s+=coord.lng + " " + coord.lat + ",";
+
+    //remember the first coord
+    if(i===0) {
+      firstCoord = coord;
+    }
+
+    if(i==coords.length-1) {
+      s+=firstCoord.lng + " " + firstCoord.lat;
+    }
+  });
+  s+="))\'),4326)";
+  console.log(s);
+  return s;
+}
 
 
 // The viz.json output by publishing on cartodb
 var layerSource = 'https://yuchu.cartodb.com/api/v2/viz/224799f6-00b4-11e6-a86a-0ea31932ec1d/viz.json';
 
 var sublayers = [];
-
-// Use of CartoDB.js
-
-// $.getJSON("https://yuchu.cartodb.com/api/v2/sql?format=GeoJSON&q="+sqlQuery, function(data) {
-//         coffeeShopLocations = L.geoJson(data,{
-//             onEachFeature: function (feature, layer) {
-//                 layer.bindPopup('' + feature.properties.name + '' + feature.properties.address + '');
-//                 layer.cartodb_id=feature.properties.cartodb_id;
-//             }
-//         }).addTo(map);
-//     });
 
 cartodb.createLayer(map, layerSource)
   .addTo(map)
@@ -76,14 +100,9 @@ cartodb.createLayer(map, layerSource)
       sublayers[i] = layer.getSubLayer(i);
     }
     sublayers[0].on('featureClick', function(e, latlng, pos, data, layer) {
-      // console.log("mouse left polygon with data: " + layer);
       var id = data.cartodb_id;
-      // console.log(data);
-      // SELECT COUNT(crn),  FROM crash, censustract WHERE ST_intersects(crash.the_geom_webmercator, censustract.the_geom_webmercator);
-      // console.log();
       cartodb.SQL({ user: 'yuchu' }).getBounds('select * from censustract WHERE cartodb_id = ' + id).done(function(bounds) {
         map.fitBounds(bounds);
-        // console.log(bounds);
       });
     });
 

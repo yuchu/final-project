@@ -167,3 +167,14 @@ $('#map_crash_density').click(function(){
       sublayers[0].setCartoCSS(density_cartocss);
     });
 });
+
+// Get column values
+var usersql = new cartodb.SQL({ user: 'yuchu'});
+usersql.execute('SELECT crash_count,namelsad10 FROM censustract ORDER BY namelsad10 ASC').done(function(data) {
+    getcrash = data.rows;
+    // console.log(getcrash);
+});
+usersql.execute('SELECT namelsad10 FROM censustract ORDER BY namelsad10 ASC').done(function(data) {
+    getcensus = data.rows;
+    // console.log(getcensus);
+});
