@@ -43,6 +43,8 @@ var drawControl = new L.Control.Draw({
 });
 
 // Handling the creation of Leaflet.Draw layers
+// Note here, the use of drawnLayerID - this is undoubdtedly the way you should approach
+//  remembering and removing layers
 var drawnLayer;
 map.addControl(drawControl);
 
@@ -52,10 +54,12 @@ map.on('draw:created', function (e) {
   var layer = e.layer;
   //console.log('draw created:', e);
   drawnLayer = e.layer;
-  var coords = e.layer._latlngs;
-  console.log(coords);
+  var coords = e.layer._latlngs; // this is vertex coordinates
+  // console.log(coords);
   userPolygon = makeSqlPolygon(coords);
+  console.log(typeof(userPolygon));
   map.addLayer(layer);
+  sublayers[2].setSQL(crashSQL + "WHERE ST_Intersects(the_geom, " +  userPolygon + ")");
 });
 
 map.on('draw:drawstart', function (e) {
@@ -67,24 +71,13 @@ map.on('draw:drawstart', function (e) {
 
 //turns an array of latLngs into an ST_POLYGONFROMTEXT
 function makeSqlPolygon(coords) {
-  var s = "ST_SETSRID(ST_PolygonFromText(\'POLYGON((";
-  var firstCoord;
-  coords.forEach(function(coord,i){
-    console.log(coord);
-    s+=coord.lng + " " + coord.lat + ",";
-
-    //remember the first coord
-    if(i===0) {
-      firstCoord = coord;
-    }
-
-    if(i==coords.length-1) {
-      s+=firstCoord.lng + " " + firstCoord.lat;
-    }
+  var i = "ST_SETSRID(ST_PolygonFromText(\'POLYGON((";
+  _.each(coords, function(coord){
+    i+=coord.lng + " " + coord.lat + ",";
   });
-  s+="))\'),4326)";
-  console.log(s);
-  return s;
+  i+=coords[0].lng + " " + coords[0].lat; //append coordinates of the first point again
+  i+="))\'),4326)";
+  return i;
 }
 
 
@@ -93,6 +86,7 @@ var layerSource = 'https://yuchu.cartodb.com/api/v2/viz/224799f6-00b4-11e6-a86a-
 
 var sublayers = [];
 
+
 cartodb.createLayer(map, layerSource)
   .addTo(map)
   .on('done', function(layer) {
@@ -100,9 +94,14 @@ cartodb.createLayer(map, layerSource)
       sublayers[i] = layer.getSubLayer(i);
     }
     sublayers[0].on('featureClick', function(e, latlng, pos, data, layer) {
+      // console.log("mouse left polygon with data: " + layer);
       var id = data.cartodb_id;
+      // console.log(data);
+      // SELECT COUNT(crn),  FROM crash, censustract WHERE ST_intersects(crash.the_geom_webmercator, censustract.the_geom_webmercator);
+      // console.log();
       cartodb.SQL({ user: 'yuchu' }).getBounds('select * from censustract WHERE cartodb_id = ' + id).done(function(bounds) {
         map.fitBounds(bounds);
+        // console.log(bounds);
       });
     });
 
