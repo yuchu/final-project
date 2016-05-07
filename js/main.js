@@ -6,10 +6,6 @@ $("#sublayer1").on('click', function() {
   sublayers[1].toggle();
 });
 
-$("#sublayer2").on('click', function() {
-  sublayers[2].toggle();
-});
-
 var searchSQL;
 var crashSQL = 'SELECT * FROM crash ';
 var year2011SQL = 'crash_year = 2011';
@@ -89,13 +85,13 @@ $('#search').click(function(){
   var radioResult = checkRadioInputs();
   if(radioResult.length>0){
     searchSQL = crashSQL + 'WHERE ' + radioResult.join(' AND ');
-    sublayers[2].setSQL(searchSQL);
+    sublayers[1].setSQL(searchSQL);
     console.log(radioResult.join(' AND '));
     update_crashcount(radioResult);
     update_crashdensity();
   }else{
     searchSQL = crashSQL;
-    sublayers[2].setSQL(searchSQL);
+    sublayers[1].setSQL(searchSQL);
     reset();
   }
 });

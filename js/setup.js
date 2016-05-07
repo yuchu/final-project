@@ -68,7 +68,7 @@ map.on('draw:created', function (e) {
   }else{
     searchSQL = crashSQL + "WHERE ST_Intersects(the_geom, " + userPolygon + ")";
   }
-  sublayers[2].setSQL(searchSQL);
+  sublayers[1].setSQL(searchSQL);
 });
 
 map.on('draw:drawstart', function (e) {
