@@ -57,9 +57,18 @@ map.on('draw:created', function (e) {
   var coords = e.layer._latlngs; // this is vertex coordinates
   // console.log(coords);
   userPolygon = makeSqlPolygon(coords);
-  console.log(typeof(userPolygon));
+  // console.log(typeof(userPolygon));
   map.addLayer(layer);
-  sublayers[2].setSQL(crashSQL + "WHERE ST_Intersects(the_geom, " +  userPolygon + ")");
+  if((searchSQL !== undefined)){
+    if(searchSQL.includes("WHERE")){
+      searchSQL += " AND ST_Intersects(the_geom, " + userPolygon + ")";
+    }else{
+      searchSQL = crashSQL + "WHERE ST_Intersects(the_geom, " + userPolygon + ")";
+    }
+  }else{
+    searchSQL = crashSQL + "WHERE ST_Intersects(the_geom, " + userPolygon + ")";
+  }
+  sublayers[2].setSQL(searchSQL);
 });
 
 map.on('draw:drawstart', function (e) {

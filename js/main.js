@@ -10,6 +10,7 @@ $("#sublayer2").on('click', function() {
   sublayers[2].toggle();
 });
 
+var searchSQL;
 var crashSQL = 'SELECT * FROM crash ';
 var year2011SQL = 'crash_year = 2011';
 var year2012SQL = 'crash_year = 2012';
@@ -20,6 +21,7 @@ var majinjSQL = 'maj_inj_count > 0';
 var noinjSQL = 'injury_count = 0';
 var bikeSQL = 'bicycle_count > 0';
 var pedSQL = 'ped_count > 0';
+
 
 var filterList = [year2011SQL,year2012SQL,year2013SQL,year2014SQL,fatalSQL,majinjSQL,noinjSQL,bikeSQL,pedSQL];
 var apiKey = '&api_key=db7140c1a9553b097d7110c16259bd9d9c5c45f1';
@@ -51,6 +53,17 @@ var checkRadioInputs = function(){
   return radioFilters;
 };
 
+var getDownloadType = function(){
+  var radioInputs = $('input[type=radio]').map(function(_, element){
+    return $(element).prop('checked');
+  }).get();
+  var select=[];
+  for(i=12; i<15; i++){
+    select.push(radioInputs[i]);
+  }
+  return select;
+};
+
 var update_crashcount = function(radioResult){
   var update_crashcount_tractSQL = 'UPDATE censustract SET crash_count = (SELECT count(*) FROM crash WHERE ' + radioResult.join(' AND ') + ' AND ' + 'ST_Intersects(the_geom, censustract.the_geom)) ';
   $.ajax('https://yuchu.cartodb.com/api/v2/sql?q=' + update_crashcount_tractSQL + apiKey).done();
@@ -59,6 +72,7 @@ var update_crashcount = function(radioResult){
 var update_crashdensity = function(){
   $.ajax('https://yuchu.cartodb.com/api/v2/sql?q=' + crashdensity_tractSQL + apiKey).done();
 };
+
 
 $('#search').click(function(){
   $("#map_none").prop("checked", true);
@@ -74,14 +88,36 @@ $('#search').click(function(){
   sublayers[0].setCartoCSS(cartocss);
   var radioResult = checkRadioInputs();
   if(radioResult.length>0){
-    sublayers[2].setSQL(crashSQL + 'WHERE ' + radioResult.join(' AND '));
+    searchSQL = crashSQL + 'WHERE ' + radioResult.join(' AND ');
+    sublayers[2].setSQL(searchSQL);
     console.log(radioResult.join(' AND '));
     update_crashcount(radioResult);
     update_crashdensity();
   }else{
-    sublayers[2].setSQL(crashSQL);
+    searchSQL = crashSQL;
+    sublayers[2].setSQL(searchSQL);
     reset();
   }
+});
+
+$('#download').click(function(){
+  var getType = getDownloadType();
+  var type;
+  var url;
+  if(getType.indexOf(true)===0){
+    type = 'shp';
+  }else if(getType.indexOf(true)===1){
+    type = 'geojson';
+  }else{
+    type = 'csv';
+  }
+
+  if(searchSQL === undefined){
+    url = 'https://yuchu.cartodb.com/api/v2/sql?format=' + type + '&filename=download&q=' + crashSQL;
+  }else{
+    url = 'https://yuchu.cartodb.com/api/v2/sql?format=' + type + '&filename=download&q=' + searchSQL;
+  }
+  window.open(url,'download');
 });
 
 $('#map_none').click(function(){

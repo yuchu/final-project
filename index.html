@@ -55,6 +55,17 @@
       <div>
         <button class="buttons" id="search"><span>Search</span></button>
       </div>
+      <div>
+        <h3>Choose download type</h3>
+        <ul class="select">
+          <li><input type="radio" name="download_type" id="download_shp" checked><label for="download_shp">Shapefile</label></li>
+          <li><input type="radio" name="download_type" id="download_geojson"><label for="download_geojson">GeoJSON</label></li>
+          <li><input type="radio" name="download_type" id="download_csv"><label for="download_csv">csv</lable></li>
+        </ul>
+      </div>
+      <div>
+        <button class="buttons" id="download"><span>Download Data</span></button>
+      </div>
     </div>
     <!-- Map -->
     <div id="map" class="map"></div>
