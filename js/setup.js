@@ -47,6 +47,7 @@ var drawControl = new L.Control.Draw({
 //  remembering and removing layers
 var drawnLayer;
 map.addControl(drawControl);
+$('.leaflet-draw-toolbar').hide();
 
 var userPolygon;
 map.on('draw:created', function (e) {

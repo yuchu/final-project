@@ -6,6 +6,40 @@ $("#sublayer1").on('click', function() {
   sublayers[1].toggle();
 });
 
+
+
+$("#download_section_button").on('click',function(){
+  $("#search_section").hide();
+  $("#search_section_button").removeClass("active");
+  $("#download_section").show();
+  $("#download_section_button").addClass("active");
+  $('.leaflet-draw-toolbar').show();
+  $("#choose_map").hide();
+  $("#about_section").hide();
+});
+
+$("#search_section_button").on('click',function(){
+  $("#search_section").show();
+  $("#search_section_button").addClass("active");
+  $("#download_section").hide();
+  $("#download_section_button").removeClass("active");
+  $('.leaflet-draw-toolbar').hide();
+  $("#choose_map").show();
+  $("#about_section").hide();
+  $("#about_section_button").removeClass("active");
+});
+
+$("#about_section_button").on('click',function(){
+  $("#search_section").hide();
+  $("#search_section_button").removeClass("active");
+  $("#download_section").hide();
+  $("#download_section_button").removeClass("active");
+  $('.leaflet-draw-toolbar').hide();
+  $("#choose_map").hide();
+  $("#about_section").show();
+  $("#about_section_button").addClass("active");
+});
+
 var searchSQL;
 var crashSQL = 'SELECT * FROM crash ';
 var year2011SQL = 'crash_year = 2011';

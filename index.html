@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <meta charset="utf-8">
@@ -11,66 +10,110 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <!-- top navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#"> Philadelphia vehicle crashes (2011 - 2014)</a>
+    <!-- top header -->
+    <div>
+      <nav class="navbar navbar-inverse navbar-fixed-top top-header">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand">Philadelphia vehicle crashes (2011-2014)</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li id="search_section_button" class="active">
+                <a href="#">Search</a>
+              </li>
+              <li id="download_section_button">
+                <a href="#">Downlaod Data</a>
+              </li>
+              <li id="about_section_button">
+                <a href="#">About</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-        </ul>
-      </div>
-    </nav>
+      </nav>
+    </div>
+
     <!-- Sidebar -->
     <div class="sidebar">
-      <div>
-        <h3>Year</h3>
-        <ul class="select">
-          <li><input type="radio" name="year" id="all_year" checked/><label for="all_year">All crashes from 2011-2014</label></li>
-          <li><input type="radio" name="year" id="year_2011"/><label for="year_2011">2011</label></li>
-          <li><input type="radio" name="year" id="year_2012" /><label for="year_2012">2012</lable></li>
-          <li><input type="radio" name="year" id="year_2013"/><label for="year_2013">2013</label></li>
-          <li><input type="radio" name="year" id="year_2014"/><label for="year_2014">2014</label></li>
-        </ul>
+      <div id="search_section">
+        <div>
+          <h3>Year</h3>
+          <ul class="select">
+            <li><input type="radio" name="year" id="all_year" checked/><label for="all_year">All crashes from 2011-2014</label></li>
+            <li><input type="radio" name="year" id="year_2011"/><label for="year_2011">2011</label></li>
+            <li><input type="radio" name="year" id="year_2012" /><label for="year_2012">2012</lable></li>
+            <li><input type="radio" name="year" id="year_2013"/><label for="year_2013">2013</label></li>
+            <li><input type="radio" name="year" id="year_2014"/><label for="year_2014">2014</label></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Injury level</h3>
+          <ul class="select">
+            <li><input type="radio" name="injury_level" id="all_injury" checked/><label for="all_injury">All injury levels</label></li>
+            <li><input type="radio" name="injury_level" id="fatal"/><label for="fatal">Fatal</label></li>
+            <li><input type="radio" name="injury_level" id="majinj" /><label for="majinj">Major injury</lable></li>
+            <li><input type="radio" name="injury_level" id="noinj"/><label for="noinj">No injury</label></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Type of people involved</h3>
+          <ul class="select">
+            <li><input type="radio" name="people_involved" id="all_people" checked><label for="all_people">All</label></li>
+            <li><input type="radio" name="people_involved" id="bike"><label for="bike">Bike-involved</label></li>
+            <li><input type="radio" name="people_involved" id="ped"><label for="ped">Pedestrian-involved</lable></li>
+          </ul>
+        </div>
+        <div>
+          <button class="buttons" id="search"><span>Search</span></button>
+        </div>
       </div>
-      <div>
-        <h3>Injury level</h3>
-        <ul class="select">
-          <li><input type="radio" name="injury_level" id="all_injury" checked/><label for="all_injury">All injury levels</label></li>
-          <li><input type="radio" name="injury_level" id="fatal"/><label for="fatal">Fatal</label></li>
-          <li><input type="radio" name="injury_level" id="majinj" /><label for="majinj">Major injury</lable></li>
-          <li><input type="radio" name="injury_level" id="noinj"/><label for="noinj">No injury</label></li>
-        </ul>
+      <div id="download_section" style="display: none;">
+        <div>
+          <h3>Choose download type</h3>
+          <ul class="select">
+            <li><input type="radio" name="download_type" id="download_shp" checked><label for="download_shp">Shapefile</label></li>
+            <li><input type="radio" name="download_type" id="download_geojson"><label for="download_geojson">GeoJSON</label></li>
+            <li><input type="radio" name="download_type" id="download_csv"><label for="download_csv">CSV</lable></li>
+          </ul>
+        </div>
+        <div>
+          <button class="buttons" id="download"><span>Download Data</span></button>
+        </div>
       </div>
-      <div>
-        <h3>Type of people involved</h3>
-        <ul class="select">
-          <li><input type="radio" name="people_involved" id="all_people" checked><label for="all_people">All</label></li>
-          <li><input type="radio" name="people_involved" id="bike"><label for="bike">Bike-involved</label></li>
-          <li><input type="radio" name="people_involved" id="ped"><label for="ped">Pedestrian-involved</lable></li>
-        </ul>
-      </div>
-      <div>
-        <button class="buttons" id="search"><span>Search</span></button>
-      </div>
-      <div>
-        <h3>Choose download type</h3>
-        <ul class="select">
-          <li><input type="radio" name="download_type" id="download_shp" checked><label for="download_shp">Shapefile</label></li>
-          <li><input type="radio" name="download_type" id="download_geojson"><label for="download_geojson">GeoJSON</label></li>
-          <li><input type="radio" name="download_type" id="download_csv"><label for="download_csv">csv</lable></li>
-        </ul>
-      </div>
-      <div>
-        <button class="buttons" id="download"><span>Download Data</span></button>
+      <div class="about_section" id="about_section" style="display: none;">
+        <h3>About</h3>
+        <p>
+          This application allows user explore and download Philadelphia's vehicle crash data.
+          The original data set is from <a href="https://www.opendataphilly.org/dataset/vehicular-crash-data">Open Data Philly Website</a>
+        </p>
+        <hr />
+        <h3>Search section</h3>
+        <p>
+          In the search section, you can select types of vehicle crashes that you interest in.
+          This application allows three types of selection: year, injury level, and type of people involved in the crash.
+        </p>
+        <p>
+          Everytime you click the search button, the application will send corresponding SQL query to the CartoDB database and return with crashes that meet your requirements.
+        </p>
+        <p>
+          You can also display the choropleth map where crashes are spatial joined to the census tract level.
+          Census tracts are colored using quantile method (5 quantiles) based on the type of choropleth map you choose.
+          This application allows two types of choropleth map: (1) by total number of crashes and (2) by crash density.
+          You can toggle the crash layer and census tract layer on and off if needed.
+        </p>
+        <hr />
+        <h3>Download section</h3>
+        <p>
+          In the download section, you can download vehicle crashes that meet your requirement in shapefile, GeoJSON, or csv format.
+          If you would like to download only crash data inside certain area, you can use the draw tools to further select the crash data.
+        </p>
       </div>
     </div>
     <!-- Map -->
     <div id="map" class="map"></div>
     <!-- choose map type -->
-    <div class="choose_map">
+    <div class="choose_map" id="choose_map">
       <div>
         <h3>Choose choropleth map</h3>
         <ul class="select">
@@ -87,6 +130,7 @@
         </div>
       </div>
     </div>
+
     <!-- Javascript Imports -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
