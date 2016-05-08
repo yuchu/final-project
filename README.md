@@ -1,2 +1,3 @@
 # final-project
-not finished yet
+Almost finished.
+Still need to clean up the code.

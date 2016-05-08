@@ -107,3 +107,12 @@ body {
   background-color:#CCCCCC;
   color:#333333;
 }
+
+.about_section a {
+  color: #DDDDDD;
+  text-decoration: none;
+}
+.about_section a:hover{
+  color: #fff;
+  text-decoration: underline;
+}
